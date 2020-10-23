@@ -1,4 +1,16 @@
 // eslint-disable-next-line no-undef
+const illegalGlobals = ['localStorage', 'name']
+const testingGlobals = [
+  'describe',
+  'it',
+  'test',
+  'expect',
+  'after',
+  'before',
+  'afterAll',
+  'beforeAll',
+]
+
 module.exports = {
   env: {
     browser: true,
@@ -9,6 +21,14 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
+  overrides: [
+    {
+      files: ['*.test.*'],
+      rules: {
+        'no-restricted-globals': ['warn', ...illegalGlobals],
+      },
+    },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 11,
@@ -17,7 +37,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'only-warn'],
   rules: {
-    'no-restricted-globals': ['warn', 'localStorage'],
+    'no-restricted-globals': ['warn', ...illegalGlobals, ...testingGlobals],
     'no-restricted-properties': [
       'warn',
       {
@@ -25,7 +45,7 @@ module.exports = {
         property: 'localStorage',
       },
     ],
-    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
 
     '@typescript-eslint/no-extra-semi': 'off',
     '@typescript-eslint/no-var-requires': 'off',
