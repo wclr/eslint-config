@@ -5,8 +5,6 @@
     "singleQuote": true
   },
   "scripts": {
-    "test": "eslint test",
-    "prepublishOnly": "pnpm test",
-    "publish": "cd package && npm publish"
+    "publish-config": "cd package && npm publish --access public"
   }
 }
